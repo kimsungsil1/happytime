@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Time Vibration</title>
+    <style>
+        button, select {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <label for="vibration-strength">진동 세기:</label>
+    <select id="vibration-strength">
+        <option value="1">약하게</option>
+        <option value="2">중간</option>
+        <option value="3">강하게</option>
+    </select>
+
+    <button id="happytime">Start Happy Time</button>
+
+    <script>
+        let isVibrating = false;
+
+        document.getElementById('happytime').addEventListener('click', function() {
+            let vibrationStrength = document.getElementById('vibration-strength').value;
+            let vibrationPattern;
+
+            // 진동 세기에 따라 진동 패턴을 다르게 설정
+            if (vibrationStrength === '1') {
+                vibrationPattern = [200, 100, 200]; // 약한 진동 패턴
+            } else if (vibrationStrength === '2') {
+                vibrationPattern = [500, 200, 500]; // 중간 진동 패턴
+            } else if (vibrationStrength === '3') {
+                vibrationPattern = [1000, 500, 1000]; // 강한 진동 패턴
+            }
+
+            if (navigator.vibrate) {
+                if (!isVibrating) {
+                    // 진동 시작
+                    navigator.vibrate(vibrationPattern);
+                    this.textContent = 'Stop Happy Time';
+                    isVibrating = true;
+                } else {
+                    // 진동 정지
+                    navigator.vibrate(0);  // 진동을 멈추게 함
+                    this.textContent = 'Start Happy Time';
+                    isVibrating = false;
+                }
+            } else {
+                alert('이 기기는 진동을 지원하지 않습니다.');
+            }
+        });
+    </script>
+
+</body>
+</html>
