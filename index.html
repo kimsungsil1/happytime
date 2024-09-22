@@ -55,12 +55,16 @@
                 if (!isVibrating) {
                     // 무한 진동 시작
                     vibrationInterval = setInterval(() => {
-                        navigator.vibrate(1000); // 1초 진동 후 다시 진동을 시작
+                        navigator.vibrate(1000); // 1초 진동
                     }, 1000);  // 1초마다 반복 진동
                     isVibrating = true;
-                    this.textContent = 'Happy Time Ongoing...';
+                    this.textContent = 'Stop Happy Time';
                 } else {
-                    alert('진동이 이미 진행 중입니다.');
+                    // 진동 멈추기
+                    clearInterval(vibrationInterval); // 진동 정지
+                    navigator.vibrate(0); // 진동을 완전히 멈추게 함
+                    isVibrating = false;
+                    this.textContent = 'Start Happy Time';
                 }
             } else {
                 alert('이 기기는 진동을 지원하지 않습니다.');
