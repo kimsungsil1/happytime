@@ -53,12 +53,16 @@
 
         document.getElementById('vibrateBtn').addEventListener('click', function() {
             if (!isVibrating) {
-                // 무한 진동 시작 (진동 시간은 최대 60초로 설정 가능)
-                vibrationInterval = setInterval(() => {
-                    navigator.vibrate(60000); // 최대 60초 진동
-                }, 60000);  // 60초마다 진동 재개
-                isVibrating = true;
-                this.textContent = 'Stop Vibration';
+                if (navigator.vibrate) {
+                    // 무한 진동 시작 (진동 시간은 최대 60초로 설정 가능)
+                    vibrationInterval = setInterval(() => {
+                        navigator.vibrate(60000); // 최대 60초 진동
+                    }, 60000);  // 60초마다 진동 재개
+                    isVibrating = true;
+                    this.textContent = 'Stop Vibration';
+                } else {
+                    alert('이 기기는 진동을 지원하지 않습니다.');
+                }
             } else {
                 // 진동 멈추기
                 clearInterval(vibrationInterval);
