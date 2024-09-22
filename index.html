@@ -54,10 +54,10 @@
         document.getElementById('vibrateBtn').addEventListener('click', function() {
             if (!isVibrating) {
                 if (navigator.vibrate) {
-                    // 강하고 빠르게 느껴지도록 짧은 간격과 긴 진동 시간으로 설정
+                    // 무한 진동: 1초 진동, 0.1초 멈춤 반복
                     vibrationInterval = setInterval(() => {
-                        navigator.vibrate([5000, 100]); // 5초 진동 후 0.1초 멈춤, 반복
-                    }, 5100);  // 패턴 주기와 맞춰서 반복
+                        navigator.vibrate([1000, 100]); // 1초 진동 후 0.1초 휴식 반복
+                    }, 1100);  // 패턴 주기에 맞춰서 반복
                     isVibrating = true;
                     this.textContent = 'Stop';
                 } else {
