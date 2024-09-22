@@ -48,12 +48,15 @@
 
     <script>
         let isVibrating = false;
+        let vibrationInterval;
 
         document.getElementById('happytime').addEventListener('click', function() {
             if (navigator.vibrate) {
                 if (!isVibrating) {
                     // 무한 진동 시작
-                    navigator.vibrate([1000]); // 1초 진동 후 멈추지 않음
+                    vibrationInterval = setInterval(() => {
+                        navigator.vibrate(1000); // 1초 진동 후 다시 진동을 시작
+                    }, 1000);  // 1초마다 반복 진동
                     isVibrating = true;
                     this.textContent = 'Happy Time Ongoing...';
                 } else {
