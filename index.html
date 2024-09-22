@@ -45,7 +45,7 @@
 </head>
 <body>
 
-    <button id="vibrateBtn">Start Vibration</button>
+    <button id="vibrateBtn">Start</button>
 
     <script>
         let isVibrating = false;
@@ -59,7 +59,7 @@
                         navigator.vibrate([1000, 100]); // 1초 진동, 0.1초 멈춤을 무한 반복
                     }, 1100);  // 패턴 주기와 맞춰서 반복
                     isVibrating = true;
-                    this.textContent = 'Stop Vibration';
+                    this.textContent = 'Stop';
                 } else {
                     alert('이 기기는 진동을 지원하지 않습니다.');
                 }
@@ -68,7 +68,7 @@
                 clearInterval(vibrationInterval);
                 navigator.vibrate(0);  // 진동을 완전히 멈추게 함
                 isVibrating = false;
-                this.textContent = 'Start Vibration';
+                this.textContent = 'Start';
             }
         });
     </script>
