@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>핸드폰을 따듯하게!</title>
+    <title>진동 기능</title>
     <style>
         * {
             margin: 0;
@@ -20,7 +20,7 @@
             font-family: 'Arial', sans-serif;
         }
 
-        #warmup {
+        button {
             padding: 20px 40px;
             font-size: 24px;
             color: #fff;
@@ -30,94 +30,41 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: all 0.3s ease;
+            margin: 20px;
         }
 
-        #warmup:hover {
+        button:hover {
             background: linear-gradient(135deg, #ff3399, #ff66b2);
             box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
         }
 
-        #warmup:active {
+        button:active {
             transform: scale(0.95);
-        }
-
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
         }
     </style>
 </head>
 <body>
 
-    <button id="warmup">핸드폰을 따듯하게!</button>
-    <canvas id="canvas"></canvas>
+    <button id="vibrateBtn">Start Vibration</button>
 
     <script>
-        let isRunning = false;
-        let vibrationInterval, animationInterval, networkInterval, heavyComputationInterval;
+        let isVibrating = false;
+        let vibrationInterval;
 
-        document.getElementById('warmup').addEventListener('click', function() {
-            if (!isRunning) {
-                // 진동 시작
+        document.getElementById('vibrateBtn').addEventListener('click', function() {
+            if (!isVibrating) {
+                // 무한 진동 시작 (진동 시간은 최대 60초로 설정 가능)
                 vibrationInterval = setInterval(() => {
-                    navigator.vibrate(1000); // 1초 진동
-                }, 1000);  // 1초마다 반복 진동
-
-                // 고속 애니메이션 시작 (Canvas)
-                const canvas = document.getElementById('canvas');
-                const ctx = canvas.getContext('2d');
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-
-                function draw() {
-                    ctx.fillStyle = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
-                    ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 100, 100);
-                }
-
-                animationInterval = setInterval(() => {
-                    draw();
-                }, 100);  // 100ms마다 애니메이션
-
-                // 네트워크 요청 반복
-                networkInterval = setInterval(() => {
-                    fetch('https://jsonplaceholder.typicode.com/posts/1')
-                        .then(response => response.json())
-                        .then(data => console.log(data));
-                }, 500);  // 500ms마다 네트워크 요청
-
-                // GPS 위치 요청
-                if (navigator.geolocation) {
-                    setInterval(() => {
-                        navigator.geolocation.getCurrentPosition(position => {
-                            console.log("Latitude: " + position.coords.latitude + ", Longitude: " + position.coords.longitude);
-                        });
-                    }, 1000); // 1초마다 GPS 요청
-                }
-
-                // 복잡한 연산 시작
-                function heavyComputation() {
-                    let result = 0;
-                    for (let i = 0; i < 1e7; i++) {
-                        result += Math.sqrt(i);
-                    }
-                    console.log(result);
-                }
-
-                heavyComputationInterval = setInterval(heavyComputation, 10); // 10ms마다 연산 반복
-
-                // 버튼 상태 변경
-                isRunning = true;
-                this.textContent = 'Stop!';
+                    navigator.vibrate(60000); // 최대 60초 진동
+                }, 60000);  // 60초마다 진동 재개
+                isVibrating = true;
+                this.textContent = 'Stop Vibration';
             } else {
-                // 모든 작업 중지
+                // 진동 멈추기
                 clearInterval(vibrationInterval);
-                clearInterval(animationInterval);
-                clearInterval(networkInterval);
-                clearInterval(heavyComputationInterval);
-                navigator.vibrate(0);  // 진동 멈추기
-                isRunning = false;
-                this.textContent = '핸드폰을 따듯하게!';
+                navigator.vibrate(0);  // 진동을 완전히 멈추게 함
+                isVibrating = false;
+                this.textContent = 'Start Vibration';
             }
         });
     </script>
