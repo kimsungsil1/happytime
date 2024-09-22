@@ -54,10 +54,10 @@
         document.getElementById('vibrateBtn').addEventListener('click', function() {
             if (!isVibrating) {
                 if (navigator.vibrate) {
-                    // 무한 진동 시작 (진동 시간은 최대 60초로 설정 가능)
+                    // 무한 진동 시작 (진동 패턴을 사용해 무한 진동 느낌 제공)
                     vibrationInterval = setInterval(() => {
-                        navigator.vibrate(60000); // 최대 60초 진동
-                    }, 60000);  // 60초마다 진동 재개
+                        navigator.vibrate([1000, 100]); // 1초 진동, 0.1초 멈춤을 무한 반복
+                    }, 1100);  // 패턴 주기와 맞춰서 반복
                     isVibrating = true;
                     this.textContent = 'Stop Vibration';
                 } else {
