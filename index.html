@@ -21,15 +21,20 @@
         }
 
         #happytime {
-            padding: 20px 40px;
+            width: 150px; /* 버튼의 너비를 고정 */
+            height: 150px; /* 버튼의 높이를 고정 */
+            padding: 0; /* 패딩 제거 */
             font-size: 24px;
             color: #fff;
             background: linear-gradient(135deg, #ff66b2, #ff3399);
             border: none;
-            border-radius: 30px;
+            border-radius: 50%; /* 동그라미 모양 */
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         #happytime:hover {
