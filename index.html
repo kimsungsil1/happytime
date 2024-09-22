@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>진동 기능</title>
+    <title>Happy Time Vibration</title>
     <style>
         * {
             margin: 0;
@@ -20,7 +20,7 @@
             font-family: 'Arial', sans-serif;
         }
 
-        button {
+        #happytime {
             padding: 20px 40px;
             font-size: 24px;
             color: #fff;
@@ -30,45 +30,44 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: all 0.3s ease;
-            margin: 20px;
         }
 
-        button:hover {
+        #happytime:hover {
             background: linear-gradient(135deg, #ff3399, #ff66b2);
             box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
         }
 
-        button:active {
+        #happytime:active {
             transform: scale(0.95);
         }
     </style>
 </head>
 <body>
 
-    <button id="vibrateBtn">Start</button>
+    <button id="happytime">Start Happy Time</button>
 
     <script>
         let isVibrating = false;
         let vibrationInterval;
 
-        document.getElementById('vibrateBtn').addEventListener('click', function() {
-            if (!isVibrating) {
-                if (navigator.vibrate) {
-                    // 무한 진동: 1초 진동, 0.1초 멈춤 반복
+        document.getElementById('happytime').addEventListener('click', function() {
+            if (navigator.vibrate) {
+                if (!isVibrating) {
+                    // 무한 진동 시작
                     vibrationInterval = setInterval(() => {
-                        navigator.vibrate([1000, 100]); // 1초 진동 후 0.1초 휴식 반복
-                    }, 1100);  // 패턴 주기에 맞춰서 반복
+                        navigator.vibrate(1000); // 1초 진동
+                    }, 1000);  // 1초마다 반복 진동
                     isVibrating = true;
-                    this.textContent = 'Stop';
+                    this.textContent = 'Stop Happy Time';
                 } else {
-                    alert('이 기기는 진동을 지원하지 않습니다.');
+                    // 진동 멈추기
+                    clearInterval(vibrationInterval); // 진동 정지
+                    navigator.vibrate(0); // 진동을 완전히 멈추게 함
+                    isVibrating = false;
+                    this.textContent = 'Start Happy Time';
                 }
             } else {
-                // 진동 멈추기
-                clearInterval(vibrationInterval);
-                navigator.vibrate(0);  // 진동을 완전히 멈추게 함
-                isVibrating = false;
-                this.textContent = 'Start';
+                alert('이 기기는 진동을 지원하지 않습니다.');
             }
         });
     </script>
